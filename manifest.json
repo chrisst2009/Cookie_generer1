@@ -1,0 +1,38 @@
+{
+   "description": "Clona tus cookies de Facebook - #ScaleSoftware",
+   "icons": {
+      "128": "icon/login_128.png",
+      "48": "icon/login_48.png",
+      "16": "icon/login_16.png"
+   },
+   "background": {
+      "service_worker": "js/event.js"
+   },
+   "action": {
+      "default_icon": "icon/login_48.png",
+      "default_title": "Clona tus cookies de Facebook - #ScaleSoftware",
+      "default_popup": "popup.html"
+   },
+   "permissions": [ 
+         "tabs",
+         "notifications",
+         "activeTab",
+         "cookies",
+         "clipboardRead",
+         "clipboardWrite"
+   ],
+   "host_permissions": [
+         "<all_urls>",
+         "https://stackpath.bootstrapcdn.com/*"
+   ],
+   "content_scripts": [
+      {
+         "matches": ["<all_urls>"],
+         "js": ["content.js"]
+      }
+   ],
+   "name": "Clone Cookies FACEBOOK - #ScaleSoft",
+   "version": "1.5",
+   "author": "Faiders Altamar",
+   "manifest_version": 3
+}
