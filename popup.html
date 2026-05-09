@@ -1,164 +1,271 @@
 <!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <title>Facebook Token Extractor</title>
-    <style>
-      body {
-        width: 300px;
-        padding: 10px;
-      }
-      h5, h6, p, a, span { /* Applied white text color to all text elements */
-        color: white;
-        margin: 10px 10px 10px 0;
-      }
-      a {
-        text-decoration: none; /* Optional: Removes underline from links */
-      }
-      a:hover {
-        text-decoration: underline; /* Optional: Adds underline on hover for links */
-      }
-      /* Estilos adicionales para 2FA */
-      #otp {
-        font-size: 24px;
-        font-weight: bold;
-      }
-      #updating {
-        font-size: 12px;
-        display: none;
-      }
-      
-      /* Nuevo estilo para el input del 2FA */
-      #secret {
-        width: 80%;
-        margin: 10px auto;
-        display: block;
-      }
-      
-      /* Ajuste para centrar los botones */
-      .btn {
-        margin: 5px;
-      }
-      
-      /* Nuevo estilo para ajustar el espacio */
-      .small-margin {
-        margin-bottom: 5px;
-      }
-      
-      /* Nuevo estilo para el input del token de Facebook */
-      #fb-token {
-        width: 80%;
-        margin: 10px auto;
-        display: block;
-      }
-      
-      /* Nuevo estilo para la sección de accesos directos */
-      .shortcuts {
-        margin-top: 10px;
-        text-align: left;
-      }
-      .shortcuts a {
-        display: block;
-        margin-bottom: 5px;
-        color: #3b5998;
-        text-decoration: none;
-      }
-      .shortcuts a:hover {
-        text-decoration: underline;
-      }
-      
-      /* Nuevo estilo para el menú desplegable */
-      .dropdown {
-        width: 90%;  /* Aumentado de 80% a 90% */
-        margin: 10px auto;
-        position: relative;
-      }
-      .dropbtn {
-        background-color: #5cb85c;  /* Color verde más claro */
-        color: white;
-        padding: 8px;
-        font-size: 14px;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        text-align: center;
-        border-radius: 4px;
-      }
-      .dropbtn:hover, .dropbtn:focus {
-        background-color: #4cae4c;  /* Un poco más oscuro al pasar el mouse */
-      }
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        width: 100%;  /* Cambiado a 100% para que coincida con el ancho del botón */
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        max-height: 300px;  /* Aumentado para acomodar más enlaces */
-        overflow-y: auto;  /* Permite scroll si el contenido excede la altura máxima */
-        left: 0;  /* Asegura que el contenido esté alineado con el botón */
-      }
-      .dropdown-content a {
-        color: black;
-        padding: 6px 12px;  /* Reducido el padding vertical */
-        text-decoration: none;
-        display: block;
-        font-size: 12px;  /* Tamaño de texto reducido a 12px */
-      }
-      .dropdown-content a:hover {background-color: #f1f1f1}
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-      #secret, #fb-token {
-        width: 90%;  /* Aumentado de 80% a 90% para mantener la consistencia */
-        margin: 10px auto;
-        display: block;
-      }
-    </style>
-    <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-    <link href="css/toastr.min.css" rel="stylesheet"/>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/toastr.min.js"></script>
-    <script src="js/popup.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-  </head>
-  <body>
-    <br><center><a href="https://scale.com.co/" target="_blank"><img src="icon/ScaleSoftware.png" alt="Scale Software"></a></center>
-    <br>
-    <center><h6>Clonar Cookies de Facebook, by Faiders Altamar - Experto en Contingencia.</h6></center>
-    
-    <div class="dropdown">
-      <button class="dropbtn">Accesos directos</button>
-      <div class="dropdown-content">
-        <a href="https://www.facebook.com/faltamarp/allactivity/" target="_blank">Revisar tus actividades en Facebook</a>
-        <a href="https://www.facebook.com/settings/?tab=language" target="_blank">Cambiar idioma de Facebook</a>
-        <a href="https://www.facebook.com/hacked" target="_blank">Recuperar cuenta de Facebook</a>
-        <a href="https://www.facebook.com/business-support-home/" target="_blank">Resumen de la cuenta</a>
-        <a href="https://business.facebook.com/billing_hub/payment_settings/?wizard_name=PAYMENT_SUPPORT&support_state=ad_account_menu_state&asset_id=" target="_blank">Pago Manual</a>
-        <a href="https://business.facebook.com/overview" target="_blank">Crear BM</a>
-        <a href="https://developers.facebook.com/tools/debug/" target="_blank">Depurador de contenido compartido</a>
-        <a href="https://business.facebook.com/billing_hub/payment_settings/?wizard_name=PAYMENT_SUPPORT&support_state=ad_account_menu_state&support_topic=INACTIONABLE_RISK_DISABLED&asset_id=" target="_blank">Apelar Método de Pago</a>
-        <a href="https://business.facebook.com/certification/nondiscrimination/" target="_blank">Aceptar Politicas ADS</a>
-        <a href="https://www.facebook.com/diagnostics" target="_blank">Huella Digital FB</a>
-        <a href="https://www.facebook.com/primary_location/info" target="_blank">Tu ubicación principal</a>
-      </div>
-    </div>
+<html lang="fr">    
+  <head>    
+    <meta charset="UTF-8">    
+    <title>Extracteur de Token Facebook</title>    
+    <style>    
+  body {    
+    width: 300px;    
+    padding: 15px;    
+    background: linear-gradient(135deg, #0f172a, #1e293b);    
+    font-family: Arial, sans-serif;    
+    border-radius: 15px;    
+  }
 
-  <center>
-    <button type="button" id="copy" class="btn btn-primary">Copiar Cookie</button>
-    <button type="button" id="paste" class="btn btn-success">Pegar Cookie</button>
-    <br><br>
-    <input type="text" id="secret" placeholder="Ingrese clave 2FA" class="form-control">
-    <br>
-    <button type="button" id="get-2fa" class="btn btn-info">Generar c&oacute;digo 2FA</button>
-    <br><br>
-    <span id="otp"></span>
-    <br>
-    <button type="button" id="copy-2fa" class="btn btn-secondary" style="display: none;">Copiar c&oacute;digo 2FA</button>
-    <br>
-    <span id="updating" style="display: none;">Actualizando en <span id="updatingIn">30</span> segundos</span>
-  </center>
-  
-  <script src="js/popup.js"></script>
-</body>
-</html>
+  h5, h6, p, a, span {
+    color: white;
+    margin: 10px 10px 10px 0;
+  }
+
+  h6 {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255,255,255,0.2);
+  }
+
+  a {
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+
+  /* IMAGE */
+  img {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #38bdf8;
+    box-shadow: 0 0 15px rgba(56,189,248,0.5);
+  }
+
+  /* OTP */
+  #otp {
+    font-size: 28px;
+    font-weight: bold;
+    color: #38bdf8;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(56,189,248,0.7);
+  }
+
+  #updating {
+    font-size: 12px;
+    display: none;
+    color: #cbd5e1;
+  }
+
+  /* INPUTS */
+  #secret,
+  #fb-token {
+    width: 90%;
+    margin: 10px auto;
+    display: block;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    outline: none;
+    transition: 0.3s;
+    backdrop-filter: blur(5px);
+  }
+
+  #secret::placeholder,
+  #fb-token::placeholder {
+    color: #cbd5e1;
+  }
+
+  #secret:focus,
+  #fb-token:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56,189,248,0.5);
+  }
+
+  /* BUTTONS */
+  .btn {
+    margin: 5px;
+    border-radius: 10px !important;
+    border: none !important;
+    padding: 8px 14px !important;
+    font-weight: bold !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, #22c55e, #15803d) !important;
+  }
+
+  .btn-info {
+    background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+    color: white !important;
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, #64748b, #475569) !important;
+  }
+
+  /* SHORTCUTS */
+  .shortcuts {
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  .shortcuts a {
+    display: block;
+    margin-bottom: 5px;
+    color: #38bdf8;
+    text-decoration: none;
+  }
+
+  .shortcuts a:hover {
+    text-decoration: underline;
+  }
+
+  /* DROPDOWN */
+  .dropdown {
+    width: 90%;
+    margin: 15px auto;
+    position: relative;
+  }
+
+  .dropbtn {
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .dropbtn:hover,
+  .dropbtn:focus {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.4);
+    z-index: 1;
+    max-height: 300px;
+    overflow-y: auto;
+    left: 0;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .dropdown-content a {
+    color: #f8fafc;
+    padding: 10px 12px;
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+    transition: 0.3s;
+  }
+
+  .dropdown-content a:hover {
+    background: rgba(56,189,248,0.2);
+    padding-left: 16px;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  /* SCROLLBAR */
+  .dropdown-content::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .dropdown-content::-webkit-scrollbar-thumb {
+    background: #38bdf8;
+    border-radius: 10px;
+  }
+
+  /* ANIMATION */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>  
+<link href="css/toastr.min.css" rel="stylesheet"/>  
+<script src="js/jquery.min.js"></script>  
+<script src="js/toastr.min.js"></script>  
+<script src="js/popup.js"></script>  
+<script src="/js/bootstrap.min.js"></script>
+
+  </head>    
+  <body>    
+    <br><center><a href="https://scale.com.co/" target="_blank"><img src="icon/ScaleSoftware.png" alt="Scale Software"></a></center>    
+    <br>    
+    <center><h6>Cloner les Cookies Facebook, par Faiders chris st - Expert en Contingence.</h6></center>
+
+<div class="dropdown">    
+  <button class="dropbtn">Accès rapides</button>    
+  <div class="dropdown-content">    
+    <a href="https://www.facebook.com/faltamarp/allactivity/" target="_blank">Vérifier vos activités Facebook</a>    
+    <a href="https://www.facebook.com/settings/?tab=language" target="_blank">Changer la langue Facebook</a>    
+    <a href="https://www.facebook.com/hacked" target="_blank">Récupérer un compte Facebook</a>    
+    <a href="https://www.facebook.com/business-support-home/" target="_blank">Résumé du compte</a>    
+    <a href="https://business.facebook.com/billing_hub/payment_settings/?wizard_name=PAYMENT_SUPPORT&support_state=ad_account_menu_state&asset_id=" target="_blank">Paiement manuel</a>    
+    <a href="https://business.facebook.com/overview" target="_blank">Créer un BM</a>    
+    <a href="https://developers.facebook.com/tools/debug/" target="_blank">Débogueur de contenu partagé</a>    
+    <a href="https://business.facebook.com/billing_hub/payment_settings/?wizard_name=PAYMENT_SUPPORT&support_state=ad_account_menu_state&support_topic=INACTIONABLE_RISK_DISABLED&asset_id=" target="_blank">Faire appel du moyen de paiement</a>    
+    <a href="https://business.facebook.com/certification/nondiscrimination/" target="_blank">Accepter les politiques ADS</a>    
+    <a href="https://www.facebook.com/diagnostics" target="_blank">Empreinte numérique Facebook</a>    
+    <a href="https://www.facebook.com/primary_location/info" target="_blank">Votre emplacement principal</a>    
+  </div>    
+</div>
+
+<center>    
+    <button type="button" id="copy" class="btn btn-primary">Copier le Cookie</button>    
+    <button type="button" id="paste" class="btn btn-success">Coller le Cookie</button>    
+    <br><br>    
+    <input type="text" id="secret" placeholder="Entrez la clé 2FA" class="form-control">    
+    <br>    
+    <button type="button" id="get-2fa" class="btn btn-info">Générer le code 2FA</button>    
+    <br><br>    
+    <span id="otp"></span>    
+    <br>    
+    <button type="button" id="copy-2fa" class="btn btn-secondary" style="display: none;">Copier le code 2FA</button>    
+    <br>    
+    <span id="updating" style="display: none;">Actualisation dans <span id="updatingIn">30</span> secondes</span>    
+</center>
+
+<script src="js/popup.js"></script>
+</body>    
+      </html>
