@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Facebook Token Extractor</title>
+    <style>
+      body {
+        width: 300px;
+        padding: 10px;
+      }
+      h5, h6, p, a, span { /* Applied white text color to all text elements */
+        color: white;
+        margin: 10px 10px 10px 0;
+      }
+      a {
+        text-decoration: none; /* Optional: Removes underline from links */
+      }
+      a:hover {
+        text-decoration: underline; /* Optional: Adds underline on hover for links */
+      }
+      /* Estilos adicionales para 2FA */
+      #otp {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      #updating {
+        font-size: 12px;
+        display: none;
+      }
+      
+      /* Nuevo estilo para el input del 2FA */
+      #secret {
+        width: 80%;
+        margin: 10px auto;
+        display: block;
+      }
+      
+      /* Ajuste para centrar los botones */
+      .btn {
+        margin: 5px;
+      }
+      
+      /* Nuevo estilo para ajustar el espacio */
+      .small-margin {
+        margin-bottom: 5px;
+      }
+      
+      /* Nuevo estilo para el input del token de Facebook */
+      #fb-token {
+        width: 80%;
+        margin: 10px auto;
+        display: block;
+      }
+      
+      /* Nuevo estilo para la sección de accesos directos */
+      .shortcuts {
+        margin-top: 10px;
+        text-align: left;
+      }
+      .shortcuts a {
+        display: block;
+        margin-bottom: 5px;
+        color: #3b5998;
+        text-decoration: none;
+      }
+      .shortcuts a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Nuevo estilo para el menú desplegable */
+      .dropdown {
+        width: 90%;  /* Aumentado de 80% a 90% */
+        margin: 10px auto;
+        position: relative;
+      }
+      .dropbtn {
+        background-color: #5cb85c;  /* Color verde más claro */
+        color: white;
+        padding: 8px;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+        border-radius: 4px;
+      }
+      .dropbtn:hover, .dropbtn:focus {
+        background-color: #4cae4c;  /* Un poco más oscuro al pasar el mouse */
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        width: 100%;  /* Cambiado a 100% para que coincida con el ancho del botón */
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        max-height: 300px;  /* Aumentado para acomodar más enlaces */
+        overflow-y: auto;  /* Permite scroll si el contenido excede la altura máxima */
+        left: 0;  /* Asegura que el contenido esté alineado con el botón */
+      }
+      .dropdown-content a {
+        color: black;
+        padding: 6px 12px;  /* Reducido el padding vertical */
+        text-decoration: none;
+        display: block;
+        font-size: 12px;  /* Tamaño de texto reducido a 12px */
+      }
+      .dropdown-content a:hover {background-color: #f1f1f1}
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      #secret, #fb-token {
+        width: 90%;  /* Aumentado de 80% a 90% para mantener la consistencia */
+        margin: 10px auto;
+        display: block;
+      }
+    </style>
+    <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <link href="css/toastr.min.css" rel="stylesheet"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <br><center><a href="https://scale.com.co/" target="_blank"><img src="icon/ScaleSoftware.png" alt="Scale Software"></a></center>
+    <br>
+    <center><h6>Clonar Cookies de Facebook, by Faiders Altamar - Experto en Contingencia.</h6></center>
+    
+    <div class="dropdown">
+      <button class="dropbtn">Accesos directos</button>
+      <div class="dropdown-content">
+        <a href="https://www.facebook.com/faltamarp/allactivity/" target="_blank">Revisar tus actividades en Facebook</a>
+        <a href="https://www.facebook.com/settings/?tab=language" target="_blank">Cambiar idioma de Facebook</a>
+        <a href="https://www.facebook.com/hacked" target="_blank">Recuperar cuenta de Facebook</a>
+        <a href="https://www.facebook.com/business-support-home/" target="_blank">Resumen de la cuenta</a>
+        <a href="https://business.facebook.com/billing_hub/payment_settings/?wizard_name=PAYMENT_SUPPORT&support_state=ad_account_menu_state&asset_id=" target="_blank">Pago Manual</a>
+        <a href="https://business.facebook.com/overview" target="_blank">Crear BM</a>
+        <a href="https://developers.facebook.com/tools/debug/" target="_blank">Depurador de contenido compartido</a>
+        <a href="https://business.facebook.com/billing_hub/payment_settings/?wizard_name=PAYMENT_SUPPORT&support_state=ad_account_menu_state&support_topic=INACTIONABLE_RISK_DISABLED&asset_id=" target="_blank">Apelar Método de Pago</a>
+        <a href="https://business.facebook.com/certification/nondiscrimination/" target="_blank">Aceptar Politicas ADS</a>
+        <a href="https://www.facebook.com/diagnostics" target="_blank">Huella Digital FB</a>
+        <a href="https://www.facebook.com/primary_location/info" target="_blank">Tu ubicación principal</a>
+      </div>
+    </div>
+
+  <center>
+    <button type="button" id="copy" class="btn btn-primary">Copiar Cookie</button>
+    <button type="button" id="paste" class="btn btn-success">Pegar Cookie</button>
+    <br><br>
+    <input type="text" id="secret" placeholder="Ingrese clave 2FA" class="form-control">
+    <br>
+    <button type="button" id="get-2fa" class="btn btn-info">Generar c&oacute;digo 2FA</button>
+    <br><br>
+    <span id="otp"></span>
+    <br>
+    <button type="button" id="copy-2fa" class="btn btn-secondary" style="display: none;">Copiar c&oacute;digo 2FA</button>
+    <br>
+    <span id="updating" style="display: none;">Actualizando en <span id="updatingIn">30</span> segundos</span>
+  </center>
+  
+  <script src="js/popup.js"></script>
+</body>
+</html>
